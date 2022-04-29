@@ -37,8 +37,4 @@ jobs:
       with:
         version: latest
         args: release --snapshot --skip-publish --rm-dist
-    - name: Setup BATS framework
-      run: sudo npm install -g bats
-    - name: kubectx (Go) integration tests
-      run: COMMAND=./dist/kubectx_linux_amd64/kubectx bats test/kubectx.bats
 
