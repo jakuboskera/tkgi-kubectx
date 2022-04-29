@@ -1,6 +1,9 @@
+project_name: tkgi-kubectx
+
 before:
   hooks:
-    - go mod download
+  - rm -rf dist
+  - go mod download
 builds:
 - id: tkgi-kubectx
   main: ./cmd/tkgi-kubectx
@@ -8,37 +11,65 @@ builds:
   env:
   - CGO_ENABLED=0
   goos:
-    - linux
-    - darwin
-    - windows
+  - linux
+  - darwin
+  - windows
   goarch:
-    - amd64
-    - arm
-    - arm64
-    - ppc64le
-    - s390x
-  goarm: [6, 7]
+  - amd64
+  - "386"
+  - arm
+  - arm64
+  goarm:
+  - 6
+  - 7
+  ignore:
+  - goos: darwin
+    goarch: "386"
+  - goos: windows
+    goarch: "arm"
+  - goos: windows
+    goarch: "arm64"
+  - goos: linux
+    goarch: arm
+    goarm: 6
+
 archives:
 - id: tkgi-kubectx-archive
   name_template: |-
-    tkgi-kubectx_{{ .Tag }}_{{ .Os }}_{{ .Arch -}}
+    {{ .ProjectName }}_{{ .Tag }}_{{ .Os }}_{{ .Arch -}}
     {{- with .Arm -}}
       {{- if (eq . "6") -}}hf
       {{- else -}}v{{- . -}}
       {{- end -}}
     {{- end -}}
   builds:
-    - tkgi-kubectx
+  - tkgi-kubectx
   replacements:
     386: i386
     amd64: x86_64
   format_overrides:
-    - goos: windows
-      format: zip
+  - goos: windows
+    format: zip
   files: ["LICENSE"]
-checksum:
-  name_template: "checksums.txt"
-  algorithm: sha256
+
 release:
-  extra_files:
-    - glob: ./tkgi-kubectx
+  prerelease: auto
+
+checksum:
+  name_template: "{{ .ProjectName }}_checksums.txt"
+  algorithm: sha256
+
+brews:
+- name: tkgi-kubectx
+  tap:
+    owner: jakuboskera
+    name: homebrew-tap
+  skip_upload: auto
+  homepage: https://github.com/jakuboskera/tkgi-kubectx
+  url_template: "https://github.com/jakuboskera/tkgi-kubectx/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+  folder: Formula
+  description: "Faster way to switch between clusters and namespaces in kubectl with support of tkgi login before switch"
+  install: |
+    bin.install "tkgi-kubectx"
+  test: |
+    system "#{bin}/tkgi-kubectx --version"
