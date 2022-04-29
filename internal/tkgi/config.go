@@ -23,13 +23,18 @@ func (c *Config) get() *Config {
 	if err != nil {
 		fmt.Println(err)
 	}
-	yamlFile, err := ioutil.ReadFile(path)
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = yaml.Unmarshal(yamlFile, c)
-	if err != nil {
-		fmt.Println(err)
+
+	fileExists, _ := exists(path)
+
+	if fileExists {
+		yamlFile, err := ioutil.ReadFile(path)
+		if err != nil {
+			fmt.Println("here", err)
+		}
+		err = yaml.Unmarshal(yamlFile, c)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 	return c
 }
