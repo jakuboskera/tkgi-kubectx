@@ -18,25 +18,9 @@ before:
   hooks:
     - go mod download
 builds:
-- id: kubectx
-  main: ./cmd/kubectx
-  binary: kubectx
-  env:
-  - CGO_ENABLED=0
-  goos:
-    - linux
-    - darwin
-    - windows
-  goarch:
-    - amd64
-    - arm
-    - arm64
-    - ppc64le
-    - s390x
-  goarm: [6, 7]
-- id: kubens
-  main: ./cmd/kubens
-  binary: kubens
+- id: tkgi-kubectx
+  main: ./cmd/tkgi-kubectx
+  binary: tkgi-kubectx
   env:
   - CGO_ENABLED=0
   goos:
@@ -51,33 +35,16 @@ builds:
     - s390x
   goarm: [6, 7]
 archives:
-- id: kubectx-archive
+- id: tkgi-kubectx-archive
   name_template: |-
-    kubectx_{{ .Tag }}_{{ .Os }}_{{ .Arch -}}
+    tkgi-kubectx_{{ .Tag }}_{{ .Os }}_{{ .Arch -}}
     {{- with .Arm -}}
       {{- if (eq . "6") -}}hf
       {{- else -}}v{{- . -}}
       {{- end -}}
     {{- end -}}
   builds:
-    - kubectx
-  replacements:
-    386: i386
-    amd64: x86_64
-  format_overrides:
-    - goos: windows
-      format: zip
-  files: ["LICENSE"]
-- id: kubens-archive
-  name_template: |-
-    kubens_{{ .Tag }}_{{ .Os }}_{{ .Arch -}}
-    {{- with .Arm -}}
-      {{- if (eq . "6") -}}hf
-      {{- else -}}v{{- . -}}
-      {{- end -}}
-    {{- end -}}
-  builds:
-    - kubens
+    - tkgi-kubectx
   replacements:
     386: i386
     amd64: x86_64
@@ -90,5 +57,4 @@ checksum:
   algorithm: sha256
 release:
   extra_files:
-    - glob: ./kubens
-    - glob: ./kubectx
+    - glob: ./tkgi-kubectx
