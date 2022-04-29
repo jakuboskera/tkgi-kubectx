@@ -20,6 +20,10 @@ what original **kubectx** has, see more in original repository
 
 ## How to use a `tkgi-kubectx`
 
+Usage `tkgi-kubectx` is really almost the same as original `kubectx`.
+Hovewer if you create `~/.kube/tkgi-kubectx/config.yaml` and `~/.kube/tkgi-kubectx/credentials.yaml`,
+`tkgi-kubectx` will start using login feature automatically.
+
 ### Prerequisities
 
 1. installed [tkgi](https://docs.pivotal.io/tkgi/1-13/installing-cli.html)
@@ -85,6 +89,12 @@ what original **kubectx** has, see more in original repository
       clusterAdmin: false
     ...
     ```
+
+1. From now on everytime you switch context to different context and that context is configured
+   in  `~/.kube/tkgi-kubectx/config.yaml`, it will first login to target context (cluster).
+   Also when target context is using same TKGI API URI as previous contecxt, login is skipped,
+   as it is not needed and it is faster way to switch.
+
 ## Installation
 
 ### Homebrew (macOS and Linux)
@@ -103,3 +113,7 @@ Available as packages on [Chocolatey](https://chocolatey.org/why-chocolatey)
 ```pwsh
 choco install tkgi-kubectx
 ```
+
+## Create an alias
+
+tkgi-kubectx can be too long, you can use for example tkx or just kx
