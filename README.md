@@ -21,7 +21,7 @@ what original **kubectx** has, see more in original repository
 ## How to use a `tkgi-kubectx`
 
 Usage `tkgi-kubectx` is really almost the same as original `kubectx`.
-Hovewer if you create `~/.kube/tkgi-kubectx/config.yaml` and `~/.kube/tkgi-kubectx/credentials.yaml`,
+Hovewer if you create files `~/.kube/tkgi-kubectx/config.yaml` and `~/.kube/tkgi-kubectx/credentials.yaml`,
 `tkgi-kubectx` will start using login feature automatically.
 
 ### Prerequisities
@@ -105,15 +105,35 @@ If you use [Homebrew](https://brew.sh/) you can install like this:
 brew install jakuboskera/tap/tkgi-kubectx
 ```
 
-This command will set up bash/zsh/fish completion scripts automatically.
+### Scoop (Windows)
 
-### Windows Installation (using Chocolatey)
+If you use [Scoop](https://scoop.sh) you can install like this
 
-Available as packages on [Chocolatey](https://chocolatey.org/why-chocolatey)
 ```pwsh
-choco install tkgi-kubectx
+scoop install https://raw.githubusercontent.com/jakuboskera/scoop-bucket/main/tkgi-kubectx.json
 ```
 
-## Create an alias
+### From release
 
-tkgi-kubectx can be too long, you can use for example tkx or just kx
+If you don't use any package managers mentioned above, you can install `tkgi-kubectx` binary manually.
+
+1. Go to [Releases](https://github.com/jakuboskera/tkgi-kubectx/releases)
+1. Download tar or zip file for your OS and CPU arch
+1. Untar or unzip the file
+1. Move binary `tkgi-kubectx` to your `PATH`
+
+## Tips
+
+Name `tkgi-kubectx` is relatively long name for a command so you can create an alias for it
+
+### MacOS or Linux
+
+```bash
+echo "alias kx=tkgi-kubectx" >> ~/.bashrc # or ~/.zshrc if you use ZSH
+```
+
+### Windows
+
+```pwsh
+Set-Alias -Name kx -Value tkgi-kubectx
+```
