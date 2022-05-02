@@ -73,3 +73,10 @@ brews:
     bin.install "tkgi-kubectx"
   test: |
     system "#{bin}/tkgi-kubectx --version"
+
+scoop:
+  bucket:
+    owner: jakuboskera
+    name: scoop-bucket
+  description: "Faster way to switch between clusters and namespaces in kubectl with support of tkgi login before switch"
+  license: "Apache 2"
