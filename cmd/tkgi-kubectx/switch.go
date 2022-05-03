@@ -70,7 +70,7 @@ func switchContext(name string) (string, error) {
 	}
 
 	// find out if tkgi login is needed before context switch or not
-	tkgiOutput, err := tkgi.Login(prev, name)
+	tkgiOutput, err := tkgi.Login(name)
 	if err != nil {
 		return "", err
 	}
