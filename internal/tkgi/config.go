@@ -1,12 +1,9 @@
 package tkgi
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
-	"path/filepath"
 
-	"github.com/ahmetb/kubectx/internal/cmdutil"
 	"gopkg.in/yaml.v3"
 )
 
@@ -18,8 +15,9 @@ type Config struct {
 	} `yaml:"clusters"`
 }
 
+// get method returns content of config.yaml file
 func (c *Config) get() *Config {
-	path, err := tkgiKubectxConfigFile()
+	path, err := getTkgiKubectxFile("config.yaml")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -37,12 +35,4 @@ func (c *Config) get() *Config {
 		}
 	}
 	return c
-}
-
-func tkgiKubectxConfigFile() (string, error) {
-	home := cmdutil.HomeDir()
-	if home == "" {
-		return "", errors.New("HOME or USERPROFILE environment variable not set")
-	}
-	return filepath.Join(home, ".kube", "tkgi-kubectx", "config.yaml"), nil
 }

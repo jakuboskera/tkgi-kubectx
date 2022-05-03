@@ -1,12 +1,9 @@
 package tkgi
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
-	"path/filepath"
 
-	"github.com/ahmetb/kubectx/internal/cmdutil"
 	"gopkg.in/yaml.v3"
 )
 
@@ -18,8 +15,9 @@ type Credentials struct {
 	} `yaml:"credentials"`
 }
 
+// get method returns content of credentials.yaml file
 func (c *Credentials) get() *Credentials {
-	path, err := tkgiKubectxCredentialsFile()
+	path, err := getTkgiKubectxFile("credentials.yaml")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -37,12 +35,4 @@ func (c *Credentials) get() *Credentials {
 		}
 	}
 	return c
-}
-
-func tkgiKubectxCredentialsFile() (string, error) {
-	home := cmdutil.HomeDir()
-	if home == "" {
-		return "", errors.New("HOME or USERPROFILE environment variable not set")
-	}
-	return filepath.Join(home, ".kube", "tkgi-kubectx", "credentials.yaml"), nil
 }
