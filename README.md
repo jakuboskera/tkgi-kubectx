@@ -32,8 +32,7 @@ Original **kubectx** can just switch between contexts (clusters). But if user
 works with TKGI clusters, he needs to first login to destination cluster before
 switching a context.
 
-From that reason, funcionallity of tkgi login was added to **kubectx** and was it
-named as **tkgi-kubectx**.
+Because of that functionality of tkgi login was added to **kubectx** and is called **tkgi-kubectx**.
 
 It works almost the same as original **kubectx**. So you can utilize all the features
 what original **kubectx** has, see more in original repository
@@ -57,11 +56,11 @@ You can check if you have a context already created by
 kubectl config get-contexts
 ```
 
-If in the output of previous command is not listed a context for given
-cluster, you have to do a manual login to the cluster first to create the
+In case previous command did not list a context for given cluster,
+you have to do a manual login to the cluster first to create the
 context in your kubeconfig.
 
-If in the output is listed a context for given cluster, you are ok
+In case previous command did list a context for given cluster, you are ok
 and you can skip to next [section](#installed-tkgi-cli-binary).
 
 There are two types of manual logins to TKGI clusters:
@@ -85,7 +84,7 @@ There are two types of manual logins to TKGI clusters:
 #### Installed tkgi CLI binary
 
 Because `tkgi-kubectx` uses tkgi CLI binary under the hood, you have to have
-installed tkgi CLI binary.
+tkgi CLI binary already installed.
 
 You can check it by:
 
@@ -138,7 +137,7 @@ split into two files.
 
 # contains list of credentials
 credentials:
-  # username specified in ~/.kube/tkgi-kubectx/config.yaml
+  # username is used as creds specified in ~/.kube/tkgi-kubectx/config.yaml
 - username: <username>
   # plaintext password for <username>
   password: <password>
@@ -161,24 +160,30 @@ See example usage below.
 
 ## 🎉 Example
 
-Let's say we have three clusters:
+Let's say we have these three clusters:
 
-1. prod-cluster,
-1. test-cluster,
-1. dev-cluster.
+| cluster (context) | TKGI API                      | username      | cluster admin |
+| :---------------- | :---------------------------: | :-----------: | :-----------: |
+| prod-cluster      | https://prod-tkgi.example.com | lhofstadter   | true          |
+| test-cluster      | https://test-tkgi.example.com | rkoothrappali | false         |
+| dev-cluster       | -                             | -             | -             |
 
 For prod-cluster and test-cluster we need to perform tkgi login everytime
-before switching to one of that contexts. For dev-cluster we don't need a tkgi login.
-For prod-cluster and test-cluster we will use different credentials.
+before switching to one of that contexts. For dev-cluster we don't need
+a tkgi login as this cluster is for example local one.
+For prod-cluster we will use user `lhofstadter` which is cluster admin
+and for test-cluster we will use user `rkoothrappali` which is not cluster admin.
 
-Check if we have these contexts in our kubeconfig.
+Check if we have created all contexts in our kubeconfig.
 
 ```bash
 $ kubectl config get-contexts
 dev-cluster
-prod-cluster
 test-cluster
 ```
+
+As you can see context for prod-cluster is missing, so we need to do
+a manual login to create context for this cluster in our kubeconfig first.
 
 Check if we have installed tkgi CLI binary
 
@@ -188,7 +193,27 @@ $ tkgi --version
 TKGI CLI version: 1.13.0-build.212
 ```
 
-In our `credentials.yaml` we have specified two credentials:
+As `lhofstadter` is cluster admin in prod-cluster,
+we will use login commands for cluster admin:
+
+```bash
+tkgi login -a https://prod-tkgi.example.com -u lhofstadter -k # -k if cert is self-signed
+```
+
+```bash
+tkgi get-credentials prod-cluster
+```
+
+Now check again if we have created all contexts in our kubeconfig.
+
+```bash
+$ kubectl config get-contexts
+dev-cluster
+prod-cluster
+test-cluster
+```
+
+Well done. Now we will add credentials to `credentials.yaml`:
 
 ```yaml
 # ~/.kube/tkgi-kubectx/credentials.yaml
@@ -202,8 +227,8 @@ credentials:
   clusterAdmin: false
 ```
 
-In our `config.yaml` we have specified two clusters and for each cluster
-different credentials:
+Now we will add configuration for prod-cluster and test-cluster
+to `config.yaml`:
 
 ```yaml
 # ~/.kube/tkgi-kubectx/config.yaml
@@ -217,7 +242,9 @@ clusters:
   tkgiApi: https://test-tkgi.example.com
 ```
 
-Switch to prod-cluster
+Everything should be configured now. Let's try it.
+If we switch to prod-cluster, it will use cluster login commands and user
+`lhofstadter` to login to that cluster.
 
 ```bash
 $ tkgi-kubectx prod-cluster
@@ -238,7 +265,8 @@ $kubectl config use-context <cluster-name>
 ✔ Switched to context "prod-cluster".
 ```
 
-Switch to test-cluster
+Now when we switch to test-cluster, it will use user `rkoothrappali`.
+As this user is not cluster admin, it will use non cluster admin login command.
 
 ```bash
 $ tkgi-kubectx test-cluster
@@ -251,7 +279,8 @@ $kubectl config use-context test-cluster
 ✔ Switched to context "test-cluster".
 ```
 
-Switch to dev-cluster
+Cluster dev-cluster is not specified in `config.yaml` so for this context,
+it will not perform tkgi login, it will just switch to that context.
 
 ```bash
 $ tkgi-kubectx dev-cluster
