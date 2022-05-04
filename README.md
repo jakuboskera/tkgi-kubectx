@@ -10,21 +10,22 @@ So before switching to target context, tkgi login is done first.
   - [📖 TOC](#-toc)
   - [🤔 Purpose of `tkgi-kubectx` ?](#-purpose-of-tkgi-kubectx-)
   - [🚀 Usage](#-usage)
-    - [⚠️ Prerequisities](#️-prerequisities)
+    - [⚠️ Prerequisites](#️-prerequisites)
       - [Check if Kubernetes context exists in kubeconfig](#check-if-kubernetes-context-exists-in-kubeconfig)
       - [Installed tkgi CLI binary](#installed-tkgi-cli-binary)
     - [Create configuration files for `tkgi-kubectx`](#create-configuration-files-for-tkgi-kubectx)
       - [`~/.kube/tkgi-kubectx/config.yaml`](#kubetkgi-kubectxconfigyaml)
       - [`~/.kube/tkgi-kubectx/credentials.yaml`](#kubetkgi-kubectxcredentialsyaml)
     - [Test functionality](#test-functionality)
-  - [🎉 Example](#-example)
+  - [🎉 Example usage](#-example-usage)
   - [🛠 Installation](#-installation)
     - [Homebrew (macOS and Linux)](#homebrew-macos-and-linux)
     - [Scoop (Windows)](#scoop-windows)
     - [From release](#from-release)
   - [ℹ️ Tips](#ℹ️-tips)
-    - [macOS or Linux](#macos-or-linux)
-    - [Windows](#windows)
+    - [Aliases](#aliases)
+      - [macOS or Linux](#macos-or-linux)
+      - [Windows](#windows)
 
 ## 🤔 Purpose of `tkgi-kubectx` ?
 
@@ -40,7 +41,7 @@ what original **kubectx** has, see more in original repository
 
 ## 🚀 Usage
 
-### ⚠️ Prerequisities
+### ⚠️ Prerequisites
 
 1. Created a Kubernetes context in your kubeconfig for a which tkgi login will be performed
 1. Installed `tkgi` CLI binary
@@ -158,7 +159,7 @@ everytime before switching to context if this context is in `config.yaml`.
 
 See example usage below.
 
-## 🎉 Example
+## 🎉 Example usage
 
 Let's say we have these three clusters:
 
@@ -316,9 +317,11 @@ If you don't use any package managers mentioned above, you can install `tkgi-kub
 
 ## ℹ️ Tips
 
+### Aliases
+
 Name `tkgi-kubectx` is relatively long for a command so you can create an alias for it
 
-### macOS or Linux
+#### macOS or Linux
 
 1. bash
 
@@ -332,7 +335,7 @@ Name `tkgi-kubectx` is relatively long for a command so you can create an alias 
     echo "alias kx=tkgi-kubectx" >> ~/.zshrc
     ```
 
-### Windows
+#### Windows
 
 1. PowerShell
 
