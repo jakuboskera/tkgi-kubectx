@@ -313,7 +313,9 @@ If you don't use any package managers mentioned above, you can install `tkgi-kub
 1. Go to [Releases](https://github.com/jakuboskera/tkgi-kubectx/releases)
 1. Download tar or zip file for your OS and CPU arch
 1. Untar or unzip the file
-1. Move binary `tkgi-kubectx` to your `PATH`
+1. Move binary `tkgi-kubectx` to your `PATH` (Check this manual [How to add a binary to your PATH](https://zwbetz.com/how-to-add-a-binary-to-your-path-on-macos-linux-windows))
+
+
 
 ## ℹ️ Tips
 
