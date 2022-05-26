@@ -9,6 +9,10 @@ So before switching to target context, tkgi login is done first.
 - [`kubectx` with support of tkgi login](#kubectx-with-support-of-tkgi-login)
   - [📖 TOC](#-toc)
   - [🤔 Purpose of `tkgi-kubectx` ?](#-purpose-of-tkgi-kubectx-)
+  - [� Installation](#-installation)
+    - [Homebrew (macOS and Linux)](#homebrew-macos-and-linux)
+    - [Scoop (Windows)](#scoop-windows)
+    - [From release](#from-release)
   - [🚀 Usage](#-usage)
     - [⚠️ Prerequisites](#️-prerequisites)
       - [Check if Kubernetes context exists in kubeconfig](#check-if-kubernetes-context-exists-in-kubeconfig)
@@ -18,10 +22,6 @@ So before switching to target context, tkgi login is done first.
       - [`~/.kube/tkgi-kubectx/credentials.yaml`](#kubetkgi-kubectxcredentialsyaml)
     - [Test functionality](#test-functionality)
   - [🎉 Example usage](#-example-usage)
-  - [🛠 Installation](#-installation)
-    - [Homebrew (macOS and Linux)](#homebrew-macos-and-linux)
-    - [Scoop (Windows)](#scoop-windows)
-    - [From release](#from-release)
   - [ℹ️ Tips](#ℹ️-tips)
     - [Aliases](#aliases)
       - [macOS or Linux](#macos-or-linux)
@@ -38,6 +38,33 @@ Because of that functionality of tkgi login was added to **kubectx** and is call
 It works almost the same as original **kubectx**. So you can utilize all the features
 what original **kubectx** has, see more in original repository
 [ahmetb/kubectx](https://github.com/ahmetb/kubectx).
+
+## 🛠 Installation
+
+### Homebrew (macOS and Linux)
+
+If you use [Homebrew](https://brew.sh/) you can install like this:
+
+```sh
+brew install jakuboskera/tap/tkgi-kubectx
+```
+
+### Scoop (Windows)
+
+If you use [Scoop](https://scoop.sh) you can install like this
+
+```pwsh
+scoop install https://raw.githubusercontent.com/jakuboskera/scoop-bucket/main/tkgi-kubectx.json
+```
+
+### From release
+
+If you don't use any package managers mentioned above, you can install `tkgi-kubectx` binary manually.
+
+1. Go to [Releases](https://github.com/jakuboskera/tkgi-kubectx/releases)
+1. Download tar or zip file for your OS and CPU arch
+1. Untar or unzip the file
+1. Move binary `tkgi-kubectx` to your `PATH` (Check this manual [How to add a binary to your PATH](https://zwbetz.com/how-to-add-a-binary-to-your-path-on-macos-linux-windows))
 
 ## 🚀 Usage
 
@@ -287,35 +314,6 @@ it will not perform tkgi login, it will just switch to that context.
 $ tkgi-kubectx dev-cluster
 ✔ Switched to context "dev-cluster".
 ```
-
-## 🛠 Installation
-
-### Homebrew (macOS and Linux)
-
-If you use [Homebrew](https://brew.sh/) you can install like this:
-
-```sh
-brew install jakuboskera/tap/tkgi-kubectx
-```
-
-### Scoop (Windows)
-
-If you use [Scoop](https://scoop.sh) you can install like this
-
-```pwsh
-scoop install https://raw.githubusercontent.com/jakuboskera/scoop-bucket/main/tkgi-kubectx.json
-```
-
-### From release
-
-If you don't use any package managers mentioned above, you can install `tkgi-kubectx` binary manually.
-
-1. Go to [Releases](https://github.com/jakuboskera/tkgi-kubectx/releases)
-1. Download tar or zip file for your OS and CPU arch
-1. Untar or unzip the file
-1. Move binary `tkgi-kubectx` to your `PATH` (Check this manual [How to add a binary to your PATH](https://zwbetz.com/how-to-add-a-binary-to-your-path-on-macos-linux-windows))
-
-
 
 ## ℹ️ Tips
 
