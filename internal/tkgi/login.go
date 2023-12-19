@@ -20,9 +20,11 @@ func tkgiPath() (string, error) {
 // getTkgiApi returns tkgi API URI from a file
 func getTkgiApi(context string) string {
 	var config Config
-	for _, v := range config.get().Clusters {
-		if context == v.Name {
-			return v.TkgiAPI
+	for _, t := range config.get().Tkgi {
+		for _, c := range t.Clusters {
+			if context == c {
+				return t.URL
+			}
 		}
 	}
 	return ""
@@ -36,9 +38,11 @@ func getCredentials(context string) (string, string) {
 		creds    Credentials
 	)
 
-	for _, v := range config.get().Clusters {
-		if context == v.Name {
-			username = v.Creds
+	for _, t := range config.get().Tkgi {
+		for _, c := range t.Clusters {
+			if context == c {
+				username = t.Creds
+			}
 		}
 	}
 
