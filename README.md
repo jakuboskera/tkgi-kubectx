@@ -2,14 +2,14 @@
 
 This repository is fork of [ahmetb/kubectx](https://github.com/ahmetb/kubectx).
 
-There is added funcionallity of tkgi login for TKGI clusters.
+There is added functionality of tkgi login for TKGI clusters.
 So before switching to target context, tkgi login is done first.
 
 ## 📖 TOC
 - [`kubectx` with support of tkgi login](#kubectx-with-support-of-tkgi-login)
   - [📖 TOC](#-toc)
   - [🤔 Purpose of `tkgi-kubectx` ?](#-purpose-of-tkgi-kubectx-)
-  - [� Installation](#-installation)
+  - [🛠 Installation](#-installation)
     - [Homebrew (macOS and Linux)](#homebrew-macos-and-linux)
     - [Scoop (Windows)](#scoop-windows)
     - [From release](#from-release)
@@ -124,7 +124,7 @@ If you don't have installed tkgi CLI binary, you can install from [HERE](https:/
 
 ### Create configuration files for `tkgi-kubectx`
 
-If you met the listed prerequisities above, you can now configure `tkgi-kubectx`.
+If you met the listed prerequisites above, you can now configure `tkgi-kubectx`.
 
 `tkgi-kubectx` needs for its function two files, these files must be created in specified location:
 
@@ -138,19 +138,24 @@ This file contains Kubernetes contexts, TKGI API and credentials reference.
 ```yaml
 # ~/.kube/tkgi-kubectx/config.yaml
 
-# contains list of clusters
-clusters:
-  # name of the cluster for a which tkgi login will be performed, the name is
-  # usually same as name of the context
-- name: <cluster1>
-  # reference to username from ~/.kube/tkgi-kubectx/credentials.yaml
-  creds: <username>
-  # TKGI API URL for given cluster
-  tkgiApi: https://<TKGI API>
-- name: <clusterN>
-  creds: <username>
-  tkgiApi: https://<TKGI API>
-...
+tkgi:
+  # TKGI API URL for given clusters
+  - url: https://<TKGI API N>
+    # reference to username from ~/.kube/tkgi-kubectx/credentials.yaml
+    creds: <username>
+    # contains list of clusters
+    clusters:
+      - <cluster1>
+      - <clusterN>
+  # TKGI API URL for given clusters
+  - url: https://<TKGI API 1>
+    # reference to username from ~/.kube/tkgi-kubectx/credentials.yaml
+    creds: <username>
+    # contains list of clusters
+    clusters:
+      - <cluster1>
+      - <clusterN>
+  ...
 ```
 
 #### `~/.kube/tkgi-kubectx/credentials.yaml`
@@ -182,7 +187,7 @@ credentials:
 ### Test functionality
 
 Now you should have everything configured and tkgi login will be performed
-everytime before switching to context if this context is in `config.yaml`.
+every time before switching to context if this context is in `config.yaml`.
 
 See example usage below.
 
@@ -196,7 +201,7 @@ Let's say we have these three clusters:
 | test-cluster      | https://test-tkgi.example.com | rkoothrappali | false         |
 | dev-cluster       | -                             | -             | -             |
 
-For prod-cluster and test-cluster we need to perform tkgi login everytime
+For prod-cluster and test-cluster we need to perform tkgi login every time
 before switching to one of that contexts. For dev-cluster we don't need
 a tkgi login as this cluster is for example local one.
 For prod-cluster we will use user `lhofstadter` which is cluster admin
@@ -225,7 +230,7 @@ As `lhofstadter` is cluster admin in prod-cluster,
 we will use login commands for cluster admin:
 
 ```bash
-tkgi login -a https://prod-tkgi.example.com -u lhofstadter -k # -k if cert is self-signed
+tkgi login -a https://prod-tkgi.example.com -u lhofstadter -k  # -k if cert is self-signed
 ```
 
 ```bash
@@ -261,13 +266,15 @@ to `config.yaml`:
 ```yaml
 # ~/.kube/tkgi-kubectx/config.yaml
 
-clusters:
-- name: prod-cluster
-  creds: lhofstadter
-  tkgiApi: https://prod-tkgi.example.com
-- name: test-cluster
-  creds: rkoothrappali
-  tkgiApi: https://test-tkgi.example.com
+tkgi:
+  - url: https://prod-tkgi.example.com
+    creds: lhofstadter
+    clusters:
+      - prod-cluster
+  - url: https://test-tkgi.example.com
+    creds: rkoothrappali
+    clusters:
+      - test-cluster
 ```
 
 Everything should be configured now. Let's try it.

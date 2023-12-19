@@ -8,11 +8,11 @@ import (
 )
 
 type Config struct {
-	Clusters []struct {
-		Name    string `yaml:"name"`
-		Creds   string `yaml:"creds"`
-		TkgiAPI string `yaml:"tkgiApi"`
-	} `yaml:"clusters"`
+	Tkgi []struct {
+		URL      string   `yaml:"url"`
+		Creds    string   `yaml:"creds"`
+		Clusters []string `yaml:"clusters"`
+	} `yaml:"tkgi"`
 }
 
 // get method returns content of config.yaml file
